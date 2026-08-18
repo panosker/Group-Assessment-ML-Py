@@ -1,26 +1,9 @@
-"""
-Section 4, Part 1: Identify the Most Important Terms Per Topic
------------------------------------------------------------------
-Uses TF-IDF (fit on TRAINING data only) to find the top distinguishing
-terms for each topic, as both unigrams and bigrams.
-
-Reused later: the train/test split saved here (train_df / test_df) should
-be reused for the rest of Section 4 (custom scoring) and Section 5
-(topic classification) so the whole pipeline stays consistent.
-
-SETUP:
-    pip install pandas scikit-learn
-
-USAGE:
-    python topic_terms.py
-"""
-
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
 # ---------------------- CONFIG ----------------------
-INPUT_FILE = "Final_Concatenated_File_Cleaned.csv"
+INPUT_FILE = "Final Concatenated File Cleaned v2.csv"
 TEXT_COLUMN = "cleaned_text"
 TOPIC_COLUMN = "Topic"
 TOP_N = 20                # how many top terms to show per topic
@@ -41,10 +24,7 @@ def load_and_clean(path):
 
 
 def top_terms_per_topic(train_df, text_col, topic_col, ngram_range, top_n):
-    """Fits TF-IDF on the training text only, then for each topic sums
-    the TF-IDF scores of its rows and returns the top_n highest-scoring
-    terms. Fitting on train-only avoids leaking test-set vocabulary into
-    the term rankings."""
+# Apply TF-IDF on the training dataset only, then for each topic sums the TF-IDF scores of its rows and returns the top_n highest-scoring terms.
     vectorizer = TfidfVectorizer(ngram_range=ngram_range, min_df=3)
     tfidf_matrix = vectorizer.fit_transform(train_df[text_col])
     terms = vectorizer.get_feature_names_out()
