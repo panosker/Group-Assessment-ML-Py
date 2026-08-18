@@ -47,7 +47,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 # ---------------------- CONFIG ----------------------
-INPUT_FILE = "Final_Concatenated_File_Cleaned.csv"
+INPUT_FILE = "Final Concatenated File Cleaned v2.csv"
 TEXT_COLUMN = "cleaned_text"
 TOPIC_COLUMN = "Topic"
 NGRAM_RANGE = (1, 3)      # unigrams, bigrams, trigrams -- no fixed phrase length
