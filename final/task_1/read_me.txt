@@ -1,0 +1,10 @@
+1.	Data Collection [5 Marks]:
+•	Download tweets/posts with relevant timestamps using Twitter API, Reddit API, etc. Show printed output of the first 10–20 posts per topic in your IDE.  [5 Marks] 
+
+Files 
+  - Code: Youtube_API_Extractor.py
+  - CSV:
+    -
+    -
+    - 
+    - 
