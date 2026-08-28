@@ -25,16 +25,16 @@ from datetime import datetime
 from googleapiclient.discovery import build
 from langdetect import detect, LangDetectException
 
-# ---------------------- CONFIG ----------------------
+
 API_KEY = os.environ.get("Eurovision_YouTube_Key", "AIzaSyAD04aLH2ms4JDJYiUS6YTUyz_j70DaTuY")
 
-TOPIC_LABEL = "Eurovision"             # label to store alongside each comment
-SEARCH_QUERY = "Eurovision"      # what to search for on YouTube
-MAX_VIDEOS = 10                      # how many videos to pull comments from
-COMMENTS_PER_VIDEO = 25             # comments per video (10 videos x 30 = ~300 posts)
-TARGET_LANGUAGE = "en"              # ISO 639-1 code: "en" English, "es" Spanish, etc. Set to None to keep all languages.
+TOPIC_LABEL = "Eurovision"            
+SEARCH_QUERY = "Eurovision"      
+MAX_VIDEOS = 10                      
+COMMENTS_PER_VIDEO = 25             
+TARGET_LANGUAGE = "en" 
 OUTPUT_FILE = f"{TOPIC_LABEL.lower()}_youtube_comments.csv"
-# ------------------------------------------------------
+
 
 
 def is_target_language(text, target_language):
