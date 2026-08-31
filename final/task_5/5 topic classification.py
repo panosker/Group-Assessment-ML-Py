@@ -1,17 +1,4 @@
-"""
-5. Topic Classification
 
-Predicts Topic (AIvsHuman / Climate / Eurovision / Mundial) from cleaned_text.
-
-Reuses train_split_scored.csv/test_split_scored.csv produced by Section 4
-(`4.1 topic_terms.py` -> `4.2 custom_scoring.py`). The custom feature is the
-per-topic affinity score from 4.2 (raw affinity_score_<topic> +
-affinity_margin, not the _scaled versions - MultinomialNB requires
-non-negative input) - `4.4 compare_representations.py` already tested.
-Random Forest with these features; this notebook runs the full 3-model
-comparison (Naive Bayes, KNN, Random Forest).
-
-"""
 
 #Import libraries
 import pandas as pd
@@ -48,12 +35,9 @@ CUSTOM_FEATURE_COLUMNS = [
 print(f"\nCustom feature columns: {CUSTOM_FEATURE_COLUMNS}")
 
 
-"""
-5.1. Baseline representation: TF-IDF
 
-Fit the TF-IDF vectorizer on train only, transform both train and test.
-Three classifiers are trained and evaluated: Naive Bayes, K-Nearest Neighbours, Random Forest.
-"""
+# 5.1. TF-IDF
+
 
 vectorizer = TfidfVectorizer(ngram_range=NGRAM_RANGE, min_df=MIN_DF)
 X_train_tfidf = vectorizer.fit_transform(train_df[TEXT_COLUMN])
@@ -82,21 +66,17 @@ def evaluate(name, model, X_train, y_train, X_test, y_test):
     print(classification_report(y_test, y_pred, zero_division=0))
     return y_pred
 
-print("=" * 50)
+
 print("BASELINE (TF-IDF only)")
-print("=" * 50)
+
 baseline_results = {}
 for name, model in models.items():
     baseline_results[name] = evaluate(name, model, X_train_tfidf, y_train, X_test_tfidf, y_test)
 
 
-"""
-5.2. Enriched representation: TF-IDF + custom affinity scores
 
-Stacks the raw affinity score columns from Section 4 onto the TF-IDF matrix,
-then re-trains the same three classifiers so the comparison is fair (same models,
-same split, only the feature matrix changes).
-"""
+# 5.2. Enriched representation: TF-IDF + custom affinity scores
+
 
 X_train_custom = train_df[CUSTOM_FEATURE_COLUMNS].to_numpy()
 X_test_custom = test_df[CUSTOM_FEATURE_COLUMNS].to_numpy()
@@ -115,12 +95,9 @@ for name, model in models.items():
     enriched_results[name] = evaluate(name, model_copy, X_train_enriched, y_train, X_test_enriched, y_test)
 
 
-"""
-5.3. Compare
 
-Weighted F1 is used for the headline comparison since the 4 topics are not
-perfectly balanced (Mundial/Eurovision 250 each vs. AIvsHuman 222 / Climate 220).
-"""
+#5.3. Compare
+
 
 summary_rows = []
 for name in models:
